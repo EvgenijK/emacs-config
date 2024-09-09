@@ -1,4 +1,4 @@
 (org-babel-load-file
- (expan-file-name
+ (expand-file-name
   "config.org"
-  user-emacs-derictory))
+  user-emacs-directory))
