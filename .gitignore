@@ -1,0 +1,16 @@
+#*
+session.*
+*~
+elpa
+*cache
+.emacs.desktop
+#shadows#
+#start.org#
+.dap-breakpoints
+.extension/
+.lsp-session-v1
+shadow_todo
+shadows
+tramp
+transient/
+url/
