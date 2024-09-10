@@ -137,8 +137,8 @@
 (setq lsp-keymap-prefix "C-c l")
 
 ;; Запускать lsp сервер при открытии файла с php-mode 
-(add-hook 'php-mode-hook 'lsp)
-;(add-hook 'php-mode-hook #'lsp-deferred) ;; until the buffer is visible
+;(add-hook 'php-mode-hook 'lsp)
+(add-hook 'php-mode-hook #'lsp-deferred) ;; until the buffer is visible
 
 ;; Интеграция с which-key-mode
 (with-eval-after-load 'lsp-mode
@@ -164,8 +164,8 @@
 
 ;; Для дебага через xdebug в PHP проектах
 
-;(require 'dap-php)
-;(dap-php-setup)
+(require 'dap-php)
+(dap-php-setup)
 
 ;; Markdown-mode -----------------------
 (setq markdown-command '("pandoc" "--from=markdown" "--to=html5"))
