@@ -3,6 +3,30 @@
 #+STARTUP: showeverything
 #+OPTIONS: toc:2
 
+* FONTS
+#+begin_src emacs-lisp
+  (set-face-attribute 'default nil
+    :font "JetBrains Mono"
+    :height 110
+    :weight 'medium)
+  (set-face-attribute 'variable-pitch nil
+    :font "Ubuntu"
+    :height 120
+    :weight 'medium)
+  (set-face-attribute 'fixed-pitch nil
+    :font "JetBrains Mono"
+    :height 110
+    :weight 'medium)
+  
+    ;; Makes commented text and keywords italics.
+    ;; This is working in emacsclient but not emacs.
+    ;; Your font must have an italic face available.
+    (set-face-attribute 'font-lock-comment-face nil
+      :slant 'italic)
+    (set-face-attribute 'font-lock-keyword-face nil
+      :slant 'italic)
+#+end_src
+
 * INITIAL CODE FROM init.el 
 #+begin_src emacs-lisp
 
