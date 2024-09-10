@@ -30,7 +30,6 @@
 * INITIAL CODE FROM init.el 
 #+begin_src emacs-lisp
 
-
 ;; List of installed packages:
 ;; 
 ;; php-mode
@@ -182,3 +181,10 @@
 (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
 
 #+end_src
+
+* ORG MODE
+
+** TODO Enabling Table of Contents
+
+** TODO Enabling Org Bullets
+
