@@ -4,8 +4,7 @@ session.*
 elpa
 *cache
 .emacs.desktop
-#shadows#
-#start.org#
+.emacs.desktop.lock
 .dap-breakpoints
 .extension/
 .lsp-session-v1
@@ -14,3 +13,4 @@ shadows
 tramp
 transient/
 url/
+games/
