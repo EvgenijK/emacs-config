@@ -87,6 +87,7 @@
 #+end_src
 
 ** Fonts
+I'm using [[https://www.jetbrains.com/lp/mono/][JetBrains Mono]] and [[https://fonts.google.com/specimen/Ubuntu?query=Ubuntu][Ubuntu]] fonts here
 #+begin_src emacs-lisp
   (set-face-attribute 'default nil
     :font "JetBrains Mono"
