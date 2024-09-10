@@ -2,92 +2,68 @@
 #+AUTHOR: Evgenij Komov (Svechnik)
 #+STARTUP: showeverything
 
-* TABLE OF CONTENTS :toc_2:
-- [[#packages][PACKAGES]]
-- [[#interface][INTERFACE]]
-  - [[#fonts][Fonts]]
-- [[#start-page][START PAGE]]
-- [[#org-mode][ORG MODE]]
-  - [[#source-code-block-tag-expansion-org-temo][Source Code Block Tag Expansion (org-temo)]]
-  - [[#enabling-table-of-contents][Enabling Table of Contents]]
-  - [[#enabling-org-bullets][Enabling Org Bullets]]
-- [[#development][DEVELOPMENT]]
-  - [[#git][Git]]
-  - [[#lsp][LSP]]
-  - [[#php][PHP]]
+* TABLE OF CONTENTS :toc_2_org:
+- [[PACKAGES][PACKAGES]]
+  - [[Adding Melpa repository][Adding Melpa repository]]
+  - [[Enabling use-package][Enabling use-package]]
+- [[INTERFACE][INTERFACE]]
+  - [[Disable Menubar, Toolbars and Scrollbars][Disable Menubar, Toolbars and Scrollbars]]
+  - [[Display Line/Column Numbers and Truncated Lines][Display Line/Column Numbers and Truncated Lines]]
+  - [[Theme][Theme]]
+  - [[Fonts][Fonts]]
+  - [[Maximize window][Maximize window]]
+- [[WHICH-KEY][WHICH-KEY]]
+- [[COMPANY][COMPANY]]
+- [[START PAGE][START PAGE]]
+- [[ORG MODE][ORG MODE]]
+  - [[Source Code Block Tag Expansion (org-temo)][Source Code Block Tag Expansion (org-temo)]]
+  - [[Enabling Table of Contents][Enabling Table of Contents]]
+  - [[Enabling Org Bullets][Enabling Org Bullets]]
+  - [[Disable Electric Indent][Disable Electric Indent]]
+- [[DEVELOPMENT][DEVELOPMENT]]
+  - [[Git][Git]]
+  - [[LSP][LSP]]
+  - [[PHP][PHP]]
 
 * PACKAGES
+** Adding Melpa repository
 #+begin_src emacs-lisp
-  ;; List of installed packages:
-  ;; 
-  ;; php-mode
-  ;; lsp-mode
-  ;;   intelephense as php language server
-  ;; lsp-ui
-  ;; company
-  ;; diff-hl
-  ;; magit
-  ;; mardown-mode
-  ;;   pandoc as converter
-  ;; which-key
-  ;; ssh-deploy
-
-  ;; Подключение репозитория с модами(пакетами) - melpa
   (require 'package)
   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
   (package-initialize)
-
-  ;; Автоматически генерируемый код при установке модов. НЕ изменять!
-  (custom-set-variables
-   ;; custom-set-variables was added by Custom.
-   ;; If you edit it by hand, you could mess it up, so be careful.
-   ;; Your init file should contain only one such instance.
-   ;; If there is more than one, they won't work right.
-   '(custom-enabled-themes '(tango-dark))
-   '(custom-safe-themes
-     '("f5f80dd6588e59cfc3ce2f11568ff8296717a938edd448a947f9823a4e282b66" default))
-   '(highlight-indent-guides-method 'character)
-   '(org-agenda-files '("~/.emacs.d/start.org"))
-   '(package-selected-packages
-     '(toc-org highlight-indent-guides doom-themes diff-hl ssh-deploy company which-key markdown-preview-mode lsp-ui magit lsp-mode php-mode org-bullets)))
-  (custom-set-faces
-   ;; custom-set-faces was added by Custom.
-   ;; If you edit it by hand, you could mess it up, so be careful.
-   ;; Your init file should contain only one such instance.
-   ;; If there is more than one, they won't work right.
-   )
 #+end_src
-* INTERFACE
+
+** Enabling use-package
+On fresh emacs install you need to install use-package first
 #+begin_src emacs-lisp
-  ;; Отключение стандартного интерфейса
-  (menu-bar-mode -1)   ;; меню сверху
-  (tool-bar-mode -1)   ;; полоска инструментов сверху
-  (scroll-bar-mode -1) ;; полоска скролла файла
-
-  ;; Сохранение и открытие последней сессии при запуске emacs
-  ;(desktop-save-mode 1)
-
-  ;; Отображение номеров строк и столбцов
-  (global-display-line-numbers-mode 1)
-  (setq column-number-mode t)
-
-  ;; [личное] Расширение окна при старте на полный экран, по хорошему поведение должно задаваться оконным менеджером
-  (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
-  (add-to-list 'default-frame-alist '(fullscreen . maximized))
-
-  ;; Тема
-  (load-theme 'doom-monokai-pro)
-
-  ;; Indetions (too slow)
-  ; (add-hook 'php-mode-hook 'highlight-indent-guides-mode)
-  ; (add-hook 'html-mode-hook 'highlight-indent-guides-mode)
-
-  ;; which-key-mode ----------------------
-  (which-key-mode)
+  (eval-when-compile
+    (require 'use-package))
+  (require 'use-package-ensure)
+(setq use-package-always-ensure t)
 #+end_src
 
+* INTERFACE
+** Disable Menubar, Toolbars and Scrollbars
+#+begin_src emacs-lisp
+(menu-bar-mode -1)   ;; меню сверху
+(tool-bar-mode -1)   ;; полоска инструментов сверху
+(scroll-bar-mode -1) ;; полоска скролла файла
+#+end_src
+** Display Line/Column Numbers and Truncated Lines
+#+begin_src emacs-lisp
+(global-display-line-numbers-mode 1)
+(setq column-number-mode t)
+(global-visual-line-mode t)
+#+end_src
+** Theme
+#+begin_src emacs-lisp
+(use-package doom-themes
+  :config
+  (load-theme 'doom-monokai-pro t))
+#+end_src
 ** Fonts
-I'm using [[https://www.jetbrains.com/lp/mono/][JetBrains Mono]] and [[https://fonts.google.com/specimen/Ubuntu?query=Ubuntu][Ubuntu]] fonts here
+I'm using [[https://www.jetbrains.com/lp/mono/][JetBrains Mono]] and [[https://fonts.google.com/specimen/Ubuntu?query=Ubuntu][Ubuntu]] fonts here.
+On fresh emacs install you need to install the fonts first.
 #+begin_src emacs-lisp
   (set-face-attribute 'default nil
     :font "JetBrains Mono"
@@ -111,6 +87,23 @@ I'm using [[https://www.jetbrains.com/lp/mono/][JetBrains Mono]] and [[https://f
       :slant 'italic)
 #+end_src
 
+** Maximize window
+#+begin_src emacs-lisp
+  ;; [личное] Расширение окна при старте на полный экран, по хорошему поведение должно задаваться оконным менеджером
+  (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
+  (add-to-list 'default-frame-alist '(fullscreen . maximized))
+#+end_src
+* WHICH-KEY
+#+begin_src emacs-lisp
+  (use-package which-key)
+  (which-key-mode)
+#+end_src
+* COMPANY
+#+begin_src emacs-lisp
+  (use-package company)
+  (add-hook 'after-init-hook 'global-company-mode)
+#+end_src
+
 * START PAGE
 #+begin_src emacs-lisp
   ;; Свой стартовый буфер
@@ -132,7 +125,6 @@ I'm using [[https://www.jetbrains.com/lp/mono/][JetBrains Mono]] and [[https://f
 
 ** Source Code Block Tag Expansion (org-temo)
 Org-tempo is not a separate package but a module within org that can be enabled.  Org-tempo allows for '<s' followed by TAB to expand to a begin_src tag.  Other expansions available include:
-
 | Typing the below + TAB | Expands to ...                          |
 |------------------------+-----------------------------------------|
 | <a                     | '#+BEGIN_EXPORT ascii' … '#+END_EXPORT  |
@@ -151,22 +143,34 @@ Org-tempo is not a separate package but a module within org that can be enabled.
 
 ** Enabling Table of Contents
 #+begin_src emacs-lisp
-  (require 'toc-org)
-  (add-hook 'org-mode-hook 'toc-mode-enable)
+  (use-package toc-org
+    :hook (org-mode toc-org-mode))
 #+end_src
 
 ** Enabling Org Bullets
 #+begin_src emacs-lisp
-  (add-hook 'org-mode-hook 'org-indent-mode)
-  (require 'org-bullets)
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+    (add-hook 'org-mode-hook 'org-indent-mode)
+     (use-package org-bullets
+       :init
+       (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+
+
+
+    ;    (use-package org-bullets
+     ;     :hook (org-mode . (lambda () (org-bullets-mode 1))))
+;        (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 #+end_src
 
+** Disable Electric Indent
+#+begin_src emacs-lisp
+  (electric-indent-mode -1)
+#+end_src
 * DEVELOPMENT
 ** Git
 *** Magit
 Magit - модуль для работы с git, имеет свой буфер, заменяющий git status, набор хоткеев для быстрой работы.
 #+begin_src emacs-lisp
+  (use-package magit)
   ;; open magit status in same window as current buffer
   (setq magit-status-buffer-switch-function 'switch-to-buffer)
 
@@ -176,6 +180,7 @@ Magit - модуль для работы с git, имеет свой буфер,
 *** Highlight changes
 #+begin_src emacs-lisp
   ;; diff-hl
+  (use-package diff-hl)
   (global-diff-hl-mode)
   (diff-hl-flydiff-mode)
   (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
@@ -190,7 +195,10 @@ Magit - модуль для работы с git, имеет свой буфер,
   (setq gc-cons-threshold 100000000)
   (setq read-process-output-max (* 1024 1024)) ;; 1 mb
 
+  (use-package lsp-mode)
+
   (require 'lsp-mode)
+  (require 'lsp-ui)
 
   (with-eval-after-load 'lsp-mode
     (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.bitrix\\'"))
@@ -220,7 +228,8 @@ Magit - модуль для работы с git, имеет свой буфер,
 #+end_src
 ** PHP
 #+begin_src emacs-lisp
-  ;; php-mode 
+  ;; php-mode
+  (use-package php-mode)
   (add-hook 'php-mode-hook 'php-enable-default-coding-style)
   (add-hook 'php-mode-hook 'lsp)
 
@@ -234,7 +243,7 @@ Magit - модуль для работы с git, имеет свой буфер,
   (dap-php-setup)
 
   ;; ssh-deploy --------------------------
+  (use-package ssh-deploy)
   (require 'ssh-deploy)
   (ssh-deploy-add-after-save-hook)
 #+end_src
-
