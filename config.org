@@ -124,10 +124,6 @@ On fresh emacs install you need to install the fonts first.
 #+end_src
 
 * ORG MODE
-#+begin_src emacs-lisp
-  (require 'org)
-#+end_src
-
 ** Source Code Block Tag Expansion (org-temo)
 Org-tempo is not a separate package but a module within org that can be enabled.  Org-tempo allows for '<s' followed by TAB to expand to a begin_src tag.  Other expansions available include:
 | Typing the below + TAB | Expands to ...                          |
@@ -143,27 +139,22 @@ Org-tempo is not a separate package but a module within org that can be enabled.
 | <s                     | '#+BEGIN_SRC' … '#+END_SRC'             |
 | <v                     | '#+BEGIN_VERSE' … '#+END_VERSE'         |
 #+begin_src emacs-lisp
-  (require 'org-tempo)
+(require 'org-tempo)
 #+end_src
 
 ** Enabling Table of Contents
 #+begin_src emacs-lisp
-  (use-package toc-org
-    :hook (org-mode toc-org-mode))
+(use-package toc-org
+    :commands toc-org-enable
+    :init (add-hook 'org-mode-hook 'toc-org-enable))
 #+end_src
 
 ** Enabling Org Bullets
 #+begin_src emacs-lisp
-    (add-hook 'org-mode-hook 'org-indent-mode)
-     (use-package org-bullets
-       :init
-       (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
-
-
-
-    ;    (use-package org-bullets
-     ;     :hook (org-mode . (lambda () (org-bullets-mode 1))))
-;        (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+(add-hook 'org-mode-hook 'org-indent-mode)
+  (use-package org-bullets
+  :init
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 #+end_src
 
 ** Disable Electric Indent
