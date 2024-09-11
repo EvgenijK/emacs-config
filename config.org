@@ -3,6 +3,7 @@
 #+STARTUP: showeverything
 
 * TABLE OF CONTENTS :toc_2_org:
+- [[DO BEFORE APPLYING ON FRESH EMACS][DO BEFORE APPLYING ON FRESH EMACS]]
 - [[PACKAGES][PACKAGES]]
   - [[Adding Melpa repository][Adding Melpa repository]]
   - [[Enabling use-package][Enabling use-package]]
@@ -24,6 +25,10 @@
   - [[Git][Git]]
   - [[LSP][LSP]]
   - [[PHP][PHP]]
+
+* DO BEFORE APPLYING ON FRESH EMACS
+- install 'use-package'
+- install fonts
 
 * PACKAGES
 ** Adding Melpa repository
