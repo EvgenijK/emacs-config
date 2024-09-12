@@ -3,6 +3,9 @@
 #+STARTUP: showeverything
 
 * TABLE OF CONTENTS :toc_2_org:
+- [[WHAT I'M USING EMACS FOR (Для каких работ я использую emacs)][WHAT I'M USING EMACS FOR (Для каких работ я использую emacs)]]
+  - [[Основной текстовый редактор][Основной текстовый редактор]]
+  - [[Разработка][Разработка]]
 - [[DO BEFORE APPLYING ON FRESH EMACS][DO BEFORE APPLYING ON FRESH EMACS]]
 - [[PACKAGES][PACKAGES]]
   - [[Adding Melpa repository][Adding Melpa repository]]
@@ -27,6 +30,15 @@
   - [[Git][Git]]
   - [[LSP][LSP]]
   - [[PHP][PHP]]
+
+* WHAT I'M USING EMACS FOR (Для каких работ я использую emacs)
+This chaper will be on russian.
+** Основной текстовый редактор
+*** заметки по работе
+*** быстрая работа с временным текстом
+** Разработка
+*** Web-разработка на PHP
+*** Разработка на C
 
 * DO BEFORE APPLYING ON FRESH EMACS
 - install 'use-package'
