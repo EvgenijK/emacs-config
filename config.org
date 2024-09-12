@@ -16,6 +16,8 @@
 - [[WHICH-KEY][WHICH-KEY]]
 - [[COMPANY][COMPANY]]
 - [[START PAGE][START PAGE]]
+- [[HOTKEYS][HOTKEYS]]
+  - [[SUDO EDIT][SUDO EDIT]]
 - [[ORG MODE][ORG MODE]]
   - [[Source Code Block Tag Expansion (org-temo)][Source Code Block Tag Expansion (org-temo)]]
   - [[Enabling Table of Contents][Enabling Table of Contents]]
@@ -123,6 +125,26 @@ On fresh emacs install you need to install the fonts first.
   (provide 'sv-start-mode)
 #+end_src
 
+* HOTKEYS
+#+begin_src emacs-lisp
+(use-package general
+  :config
+  ;; set up 'M-SPC' as the global leader key
+  (general-create-definer sv/leader-keys
+    :keymaps 'override
+    :prefix "M-SPC")
+)
+#+end_src
+
+** SUDO EDIT
+Allows to reopen/open readonly file with sudo privileges
+#+begin_src emacs-lisp
+(use-package sudo-edit
+  :config
+    (sv/leader-keys
+      "s" 'sudo-edit
+      "S" 'sudo-edit-find-file))
+#+end_src
 * ORG MODE
 ** Source Code Block Tag Expansion (org-temo)
 Org-tempo is not a separate package but a module within org that can be enabled.  Org-tempo allows for '<s' followed by TAB to expand to a begin_src tag.  Other expansions available include:
