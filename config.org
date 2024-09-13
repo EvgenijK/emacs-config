@@ -14,6 +14,7 @@
   - [[Disable Menubar, Toolbars and Scrollbars][Disable Menubar, Toolbars and Scrollbars]]
   - [[Display Line/Column Numbers and Truncated Lines][Display Line/Column Numbers and Truncated Lines]]
   - [[Theme][Theme]]
+  - [[Icons][Icons]]
   - [[Fonts][Fonts]]
   - [[Maximize window][Maximize window]]
 - [[WHICH-KEY][WHICH-KEY]]
@@ -43,6 +44,7 @@ This chaper will be on russian.
 * DO BEFORE APPLYING ON FRESH EMACS
 - install 'use-package'
 - install fonts
+- run M-x all-the-icons-install-fonts to install fonts for icons
 
 * PACKAGES
 ** Adding Melpa repository
@@ -79,6 +81,16 @@ On fresh emacs install you need to install use-package first
 (use-package doom-themes
   :config
   (load-theme 'doom-monokai-pro t))
+#+end_src
+** Icons
+This is an icon set that can be used with dashboard, dired, ibuffer and other Emacs programs.
+#+begin_src emacs-lisp
+(use-package all-the-icons
+  :ensure t
+  :if (display-graphic-p))
+
+(use-package all-the-icons-dired
+  :hook (dired-mode . (lambda () (all-the-icons-dired-mode t))))
 #+end_src
 ** Fonts
 I'm using [[https://www.jetbrains.com/lp/mono/][JetBrains Mono]] and [[https://fonts.google.com/specimen/Ubuntu?query=Ubuntu][Ubuntu]] fonts here.
@@ -231,7 +243,7 @@ Magit - модуль для работы с git, имеет свой буфер,
   (require 'lsp-ui)
 
   (with-eval-after-load 'lsp-mode
-    (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.bitrix\\'"))
+    (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\bitrix\\'"))
 
   ;; чтобы не отображалось предупреждение на больших проектах
   (setq lsp-file-watch-threshold 100000)
