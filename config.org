@@ -194,6 +194,9 @@ On fresh emacs install you need to install the fonts first.
     :keymaps 'override
     :prefix "M-SPC")
 )
+
+(global-set-key "\C-s" 'swiper)
+
 #+end_src
 
 ** SUDO EDIT
