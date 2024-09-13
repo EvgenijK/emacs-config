@@ -20,6 +20,7 @@
 - [[WHICH-KEY][WHICH-KEY]]
 - [[IVY (COUNSEL)][IVY (COUNSEL)]]
 - [[COMPANY][COMPANY]]
+- [[DIMINISH][DIMINISH]]
 - [[START PAGE][START PAGE]]
 - [[HOTKEYS][HOTKEYS]]
   - [[SUDO EDIT][SUDO EDIT]]
@@ -127,8 +128,9 @@ On fresh emacs install you need to install the fonts first.
 #+end_src
 * WHICH-KEY
 #+begin_src emacs-lisp
-  (use-package which-key)
-  (which-key-mode)
+(use-package which-key
+  :diminish)
+(which-key-mode)
 #+end_src
 * IVY (COUNSEL)
 - Ivy, a generic completion mechanism for Emacs.
@@ -137,9 +139,11 @@ On fresh emacs install you need to install the fonts first.
 #+begin_src emacs-lisp
 (use-package counsel
   :after ivy
+  :diminish
   :config (counsel-mode))
 
 (use-package ivy
+  :diminish
   :custom
   (setq ivy-use-virtual-buffers t)
   (setq ivy-count-format "(%d/%d) ")
@@ -167,13 +171,21 @@ On fresh emacs install you need to install the fonts first.
 #+end_src
 * COMPANY
 #+begin_src emacs-lisp
-(use-package company)
+(use-package company
+  :diminish)
 (add-hook 'after-init-hook 'global-company-mode)
 
 (use-package company-box
   :after company
+  :diminish
   :hook (company-mode . company-box-mode))
 
+#+end_src
+
+* DIMINISH
+This package implements hiding or abbreviation of the modeline displays (lighters) of minor-modes.  With this package installed, you can add ‘:diminish’ to any use-package block to hide that particular mode in the modeline.
+#+begin_src emacs-lisp
+(use-package diminish)
 #+end_src
 
 * START PAGE
