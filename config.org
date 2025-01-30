@@ -127,6 +127,16 @@ On fresh emacs install you need to install the fonts first.
   (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
 #+end_src
+* REVERSE_IM
+Пакет для работы хоткеев emacs при переключении раскладки на другой язык
+#+begin_src emacs-lisp
+(use-package reverse-im
+  :ensure t
+  :custom
+  (reverse-im-input-methods '("russian-computer"))
+  :config
+  (reverse-im-mode t))
+#+end_src
 * WHICH-KEY
 #+begin_src emacs-lisp
 (use-package which-key
