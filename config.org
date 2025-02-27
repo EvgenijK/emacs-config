@@ -17,23 +17,22 @@
   - [[Icons][Icons]]
   - [[Fonts][Fonts]]
   - [[Maximize window][Maximize window]]
+- [[REVERSE_IM][REVERSE_IM]]
 - [[WHICH-KEY][WHICH-KEY]]
 - [[IVY (COUNSEL)][IVY (COUNSEL)]]
 - [[COMPANY][COMPANY]]
 - [[DIMINISH][DIMINISH]]
-- [[START PAGE][START PAGE]]
+- [[DASHBOARD][DASHBOARD]]
 - [[HOTKEYS][HOTKEYS]]
   - [[SUDO EDIT][SUDO EDIT]]
 - [[ORG MODE][ORG MODE]]
+  - [[Org-Agenda][Org-Agenda]]
   - [[Source Code Block Tag Expansion (org-temo)][Source Code Block Tag Expansion (org-temo)]]
   - [[Enabling Table of Contents][Enabling Table of Contents]]
   - [[Enabling Org Bullets][Enabling Org Bullets]]
   - [[Disable Electric Indent][Disable Electric Indent]]
 - [[DEVELOPMENT][DEVELOPMENT]]
   - [[Git][Git]]
-  - [[LSP][LSP]]
-  - [[Debug][Debug]]
-  - [[PHP][PHP]]
 
 * WHAT I'M USING EMACS FOR (Для каких работ я использую emacs)
 This chaper will be on russian.
@@ -175,9 +174,10 @@ On fresh emacs install you need to install the fonts first.
   (ivy-virtual-abbreviate 'full
    ivy-rich-switch-buffer-align-virtual-buffer t
    ivy-rich-path-style 'abbrev)
-  :config
-  (ivy-set-display-transformer 'ivy-switch-buffer
-                               'ivy-rich-switch-buffer-transformer))
+;  :config
+;  (ivy-set-display-transformer 'ivy-switch-buffer
+;                               'ivy-rich-switch-buffer-transformer)
+)
 
 #+end_src
 * COMPANY
@@ -199,20 +199,31 @@ This package implements hiding or abbreviation of the modeline displays (lighter
 (use-package diminish)
 #+end_src
 
-* START PAGE
+* DASHBOARD
 #+begin_src emacs-lisp
-  ;; Свой стартовый буфер
-  (setq initial-buffer-choice "~/.emacs.d/start.org")
-
-  ;; minor mode для стартовой страницы
-  (define-minor-mode sv-start-mode
-    "Minor mode for start page."
-    :lighter " start"
-    (setq-local org-link-elisp-confirm-function nil))
-
-  (provide 'sv-start-mode)
+(use-package dashboard
+  :ensure t
+  :init
+  (setq initial-buffer-choice 'dashboard-open)
+  (setq dashboard-set-heading-icons t)
+  (setq dashboard-set-file-icons t)
+  (setq dashboard-banner-logo-title "Emacs Is More Than A Text Editor!")
+  (setq dashboard-startup-banner 'logo) ;; use standard emacs logo as banner
+  ;;(setq dashboard-startup-banner "/home/dt/.config/emacs/images/emacs-dash.png")  ;; use custom image as banner
+  (setq dashboard-center-content nil) ;; set to 't' for centered content
+  (setq dashboard-items '((recents . 5)
+                          (agenda . 5 )
+                          (bookmarks . 3)
+                          (projects . 3)
+                          (registers . 3)))
+  :custom
+  (dashboard-modify-heading-icons '((recents . "file-text")
+                                    (bookmarks . "book")))
+  :config
+  (dashboard-setup-startup-hook)
+)
+(setq dashboard-filter-agenda-entry 'dashboard-no-filter-agenda)
 #+end_src
-
 * HOTKEYS
 #+begin_src emacs-lisp
 (use-package general
@@ -237,6 +248,10 @@ Allows to reopen/open readonly file with sudo privileges
       "S" 'sudo-edit-find-file))
 #+end_src
 * ORG MODE
+** Org-Agenda
+#+begin_src emacs-lisp
+(setq org-agenda-files '("~/Documents/Agenda/agenda.org"))
+#+end_src
 ** Source Code Block Tag Expansion (org-temo)
 Org-tempo is not a separate package but a module within org that can be enabled.  Org-tempo allows for '<s' followed by TAB to expand to a begin_src tag.  Other expansions available include:
 | Typing the below + TAB | Expands to ...                          |
@@ -288,77 +303,9 @@ Magit - модуль для работы с git, имеет свой буфер,
 #+end_src
 *** Highlight changes
 #+begin_src emacs-lisp
-  ;; diff-hl
   (use-package diff-hl)
   (global-diff-hl-mode)
   (diff-hl-flydiff-mode)
   (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
-#+end_src
-
-** LSP
-#+begin_src emacs-lisp
-  ;; LSP-mode ----------------------------
-
-  ;; Настройки производительности для lsp-mode
-  (setq gc-cons-threshold 100000000)
-  (setq read-process-output-max (* 1024 1024)) ;; 1 mb
-
-  (use-package lsp-mode)
-
-  (require 'lsp-mode)
-
-  (use-package lsp-ui)
-
-  (require 'lsp-ui)
-
-  (with-eval-after-load 'lsp-mode
-    (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\bitrix\\'"))
-
-  ;; чтобы не отображалось предупреждение на больших проектах
-  (setq lsp-file-watch-threshold 100000)
-
-  ;; Префикс для команд lsp-mode
-  (setq lsp-keymap-prefix "C-c l")
-
-  ;; Запускать lsp сервер при открытии файла с php-mode 
-  ;(add-hook 'php-mode-hook 'lsp)
-  (add-hook 'php-mode-hook #'lsp-deferred) ;; until the buffer is visible
-
-  ;; Интеграция с which-key-mode
-  (with-eval-after-load 'lsp-mode
-    (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
-  ;; Розобраться как сделать: "enable which-key integration for all major modes by passing t as a parameter"
-
-  ;; lsp-ui ------------------------------
-  (setq lsp-ui-doc-show-with-cursor t) ;; почему-то не работает из коробки
-  (setq lsp-ui-doc-delay 0.3)
-  (setq lsp-ui-doc-position 'bottom) ;; at-point | bottom | top
-  ;; в вариантах "top" и "bottom" окно с доком не учитывает,
-  ;; что может быть открыто несколько окон: отображается в углу фрейма
-
-#+end_src
-** Debug
-Dap-mode для дебага через xdebug в PHP проектах
-#+begin_src emacs-lisp
-(use-package dap-mode)
-(require 'dap-php)
-(dap-php-setup)
-
-#+end_src
-** PHP
-#+begin_src emacs-lisp
-  ;; php-mode
-  (use-package php-mode)
-  (add-hook 'php-mode-hook 'php-enable-default-coding-style)
-  (add-hook 'php-mode-hook 'lsp)
-
-   ;; Интеграция с which-key-mode
-  (with-eval-after-load 'lsp-mode
-     (require 'dap-php))
-
-  ;; ssh-deploy --------------------------
-  (use-package ssh-deploy)
-  (require 'ssh-deploy)
-  (ssh-deploy-add-after-save-hook)
 #+end_src
