@@ -10,6 +10,7 @@
 - [[PACKAGES][PACKAGES]]
   - [[Adding Melpa repository][Adding Melpa repository]]
   - [[Enabling use-package][Enabling use-package]]
+- [[BACKUPS][BACKUPS]]
 - [[INTERFACE][INTERFACE]]
   - [[Disable Menubar, Toolbars and Scrollbars][Disable Menubar, Toolbars and Scrollbars]]
   - [[Display Line/Column Numbers and Truncated Lines][Display Line/Column Numbers and Truncated Lines]]
@@ -31,6 +32,7 @@
   - [[Enabling Table of Contents][Enabling Table of Contents]]
   - [[Enabling Org Bullets][Enabling Org Bullets]]
   - [[Disable Electric Indent][Disable Electric Indent]]
+  - [[Agenda][Agenda]]
 - [[DEVELOPMENT][DEVELOPMENT]]
   - [[Git][Git]]
 
@@ -64,7 +66,10 @@ On fresh emacs install you need to install use-package first
   (require 'use-package-ensure)
 (setq use-package-always-ensure t)
 #+end_src
-
+* BACKUPS
+#+begin_src emacs-lisp
+(setq backup-directory-alist `(("." . "~/.emacs.d/saves")))
+#+end_src
 * INTERFACE
 ** Disable Menubar, Toolbars and Scrollbars
 #+begin_src emacs-lisp
@@ -207,7 +212,7 @@ This package implements hiding or abbreviation of the modeline displays (lighter
   (setq initial-buffer-choice 'dashboard-open)
   (setq dashboard-set-heading-icons t)
   (setq dashboard-set-file-icons t)
-  (setq dashboard-banner-logo-title "Emacs Is More Than A Text Editor!")
+  ;; (setq dashboard-banner-logo-title "Emacs Is More Than A Text Editor!")
   (setq dashboard-startup-banner 'logo) ;; use standard emacs logo as banner
   ;;(setq dashboard-startup-banner "/home/dt/.config/emacs/images/emacs-dash.png")  ;; use custom image as banner
   (setq dashboard-center-content nil) ;; set to 't' for centered content
@@ -288,6 +293,10 @@ Org-tempo is not a separate package but a module within org that can be enabled.
 ** Disable Electric Indent
 #+begin_src emacs-lisp
   (electric-indent-mode -1)
+#+end_src
+** Agenda
+#+begin_src emacs-lisp
+(setq org-agenda-files '("~/Documents"))
 #+end_src
 * DEVELOPMENT
 ** Git
