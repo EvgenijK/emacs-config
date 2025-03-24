@@ -18,6 +18,8 @@
   - [[Icons][Icons]]
   - [[Fonts][Fonts]]
   - [[Maximize window][Maximize window]]
+- [[GUESS-LANGUAGE][GUESS-LANGUAGE]]
+- [[FLYSPELL][FLYSPELL]]
 - [[REVERSE_IM][REVERSE_IM]]
 - [[WHICH-KEY][WHICH-KEY]]
 - [[IVY (COUNSEL)][IVY (COUNSEL)]]
@@ -131,6 +133,28 @@ On fresh emacs install you need to install the fonts first.
   (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
 #+end_src
+* GUESS-LANGUAGE
+Пакет для определения используемого языка на лету.
+Использую для проверки орфографии на русском языке.
+#+begin_src emacs-lisp
+(use-package guess-language
+  :ensure t
+  :defer t
+  :init (add-hook 'text-mode-hook #'guess-language-mode)
+  :config
+  (setq guess-language-langcodes '((en . ("en_GB" "English"))
+                                   (ru . ("ru_RU" "Russian")))
+        guess-language-languages '(en ru)
+        guess-language-min-paragraph-length 45)
+  :diminish guess-language-mode)
+#+end_src
+* FLYSPELL
+Включает проверку орфографии
+Требует установки hunspell и его пакетов для нужных языков.
+#+begin_src emacs-lisp
+(add-hook 'text-mode-hook 'flyspell-mode)
+(add-hook 'prog-mode-hook 'flyspell-prog-mode)
+#+end_src
 * REVERSE_IM
 Пакет для работы хоткеев emacs при переключении раскладки на другой язык
 #+begin_src emacs-lisp
@@ -216,18 +240,17 @@ This package implements hiding or abbreviation of the modeline displays (lighter
   (setq dashboard-startup-banner 'logo) ;; use standard emacs logo as banner
   ;;(setq dashboard-startup-banner "/home/dt/.config/emacs/images/emacs-dash.png")  ;; use custom image as banner
   (setq dashboard-center-content nil) ;; set to 't' for centered content
-  (setq dashboard-items '((recents . 5)
-                          (agenda . 5 )
-                          (bookmarks . 3)
-                          (projects . 3)
-                          (registers . 3)))
+  (setq dashboard-items '((agenda . 10)
+                          (recents . 5 )))
   :custom
   (dashboard-modify-heading-icons '((recents . "file-text")
                                     (bookmarks . "book")))
   :config
   (dashboard-setup-startup-hook)
 )
-(setq dashboard-filter-agenda-entry 'dashboard-no-filter-agenda)
+; (setq dashboard-filter-agenda-entry 'dashboard-no-filter-agenda)
+ ;(setq dashboard-filter-agenda-entry "+TODO&SCHEDULED<=*\"<today>\"&DEADLINE>=*\"<today>\"")
+;(add-to-list 'dashboard-items '(agenda) t)
 #+end_src
 * HOTKEYS
 #+begin_src emacs-lisp
@@ -296,7 +319,8 @@ Org-tempo is not a separate package but a module within org that can be enabled.
 #+end_src
 ** Agenda
 #+begin_src emacs-lisp
-(setq org-agenda-files '("~/Documents"))
+;;(setq org-agenda-files '("~/Documents/*"))
+(setq org-agenda-files (directory-files-recursively "~/Documents/" "\\.org$"))
 #+end_src
 * DEVELOPMENT
 ** Git
